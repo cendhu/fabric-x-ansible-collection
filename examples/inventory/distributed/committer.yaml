@@ -1,0 +1,239 @@
+#
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# This inventory runs an Hyperledger Fabric-X Committer with a loadgen that acts also as mocking orderer.
+
+# To run this inventory, follow the steps:
+# 1. make generate-crypto build-bins && make fabric_x_committer transfer && make load_generators transfer && make monitoring transfer
+
+# To start:
+# make fabric_x_committer start && make load_generators start && make monitoring start
+
+# To stop the network:
+# make teardown
+
+all:
+  vars:
+    # =========================
+    # Organizations
+    # =========================
+    container_client: docker
+    organizations:
+      orderer_org_1: &OrdererOrg1
+        name: OrdererOrg1
+        domain: ordererorg1.example.com
+      org1: &Org1
+        name: Org1
+        domain: org1.example.com
+  children:
+    # =========================
+    # Network (HLFX)
+    # =========================
+    network:
+      children:
+        # =========================
+        # Hyperledger Fabric-X
+        # =========================
+        fabric_x:
+          children:
+            # =========================
+            # HLFX Orderers
+            # =========================
+            fabric_x_orderers:
+              children:
+                # fake orderer replicating the same endpoint as the mock orderer
+                # set as many assemblers as ports in loadgen_mock_orderer_ports
+                # assign each assembler to the same host and port of the loadgen
+                mock_orderer:
+                  vars:
+                    organization:
+                      <<: *OrdererOrg1
+                      role: orderer
+                    orderer_group: 1
+                  hosts:
+                    mock-orderer-assembler-1:
+                      ansible_host: "{{ host_machine_19 }}"
+                      orderer_component_type: assembler
+                      orderer_rpc_port: 8001
+
+            # =========================
+            # HLFX Committer
+            # =========================
+            fabric_x_committer:
+              vars:
+                committer_git_commit: "v0.1.7"
+                committer_use_bin: true
+                committer_build_bin: true
+                committer_rpc_port: 8001
+                prometheus_exporter_port: 8002
+                organization:
+                  <<: *Org1
+                  role: peer
+              hosts:
+                committer-sidecar:
+                  committer_component_type: sidecar
+                  ansible_host: "{{ host_machine_1 }}"
+                committer-coordinator:
+                  committer_component_type: coordinator
+                  ansible_host: "{{ host_machine_2 }}"
+              children:
+                committer_validators:
+                  vars:
+                    committer_component_type: validator
+                    yugabyte_cluster_ref_id: 1
+                  hosts:
+                    committer-validator-1:
+                      ansible_host: "{{ host_machine_3 }}"
+                    committer-validator-2:
+                      ansible_host: "{{ host_machine_4 }}"
+                    committer-validator-3:
+                      ansible_host: "{{ host_machine_5 }}"
+                committer_verifiers:
+                  vars:
+                    committer_component_type: verifier
+                  hosts:
+                    committer-verifier-1:
+                      ansible_host: "{{ host_machine_6 }}"
+                    committer-verifier-2:
+                      ansible_host: "{{ host_machine_7 }}"
+                committer_dbs:
+                  vars:
+                    yugabyte_user: yugabyte
+                    yugabyte_password: yugabyte
+                    yugabyte_db: yugabyte
+                    yugabyte_cluster_id: 1
+                  children:
+                    yb_masters:
+                      vars:
+                        yugabyte_component_type: master
+                        yugabyte_master_rpc_bind_port: 8003
+                        yugabyte_master_webserver_port: 8004
+                      hosts:
+                        yugabytedb-master-1:
+                          ansible_host: "{{ host_machine_3 }}"
+                        yugabytedb-master-2:
+                          ansible_host: "{{ host_machine_4 }}"
+                        yugabytedb-master-3:
+                          ansible_host: "{{ host_machine_5 }}"
+                    yb_tablets:
+                      vars:
+                        yugabyte_component_type: tablet
+                        yugabyte_tablet_pgsql_bind_port: 8001
+                        yugabyte_tablet_rpc_bind_port: 8002
+                        yugabyte_tablet_webserver_port: 8003
+                        yugabyte_tablet_redis_web_port: 8004
+                        yugabyte_tablet_cql_web_port: 8005
+                        yugabyte_tablet_pgsql_web_port: 8006
+                        yugabyte_tablet_cql_bind_port: 8007
+                        yugabyte_tablet_redis_rpc_port: 8008
+                      hosts:
+                        yugabytedb-tablet-1:
+                          ansible_host: "{{ host_machine_8 }}"
+                        yugabytedb-tablet-2:
+                          ansible_host: "{{ host_machine_9 }}"
+                        yugabytedb-tablet-3:
+                          ansible_host: "{{ host_machine_10 }}"
+                        yugabytedb-tablet-4:
+                          ansible_host: "{{ host_machine_11 }}"
+                        yugabytedb-tablet-5:
+                          ansible_host: "{{ host_machine_12 }}"
+                        yugabytedb-tablet-6:
+                          ansible_host: "{{ host_machine_13 }}"
+                        yugabytedb-tablet-7:
+                          ansible_host: "{{ host_machine_14 }}"
+                        yugabytedb-tablet-8:
+                          ansible_host: "{{ host_machine_15 }}"
+                        yugabytedb-tablet-9:
+                          ansible_host: "{{ host_machine_16 }}"
+                        yugabytedb-tablet-10:
+                          ansible_host: "{{ host_machine_17 }}"
+                        yugabytedb-tablet-11:
+                          ansible_host: "{{ host_machine_18 }}"
+
+    # =========================
+    # HLFX LoadGens
+    # =========================
+    load_generators:
+      vars:
+        organization:
+          <<: *Org1
+          role: peer
+          users:
+            - name: orderer-loadgen
+              namespace: 0
+        loadgen_type: sidecar-client
+        loadgen_mock_orderer_ports:
+          - 8001
+        loadgen_web_port: 8002
+        prometheus_exporter_port: 8003
+        loadgen_build_bin: true
+        loadgen_use_bin: true
+        loadgen_limit_rate: 50000
+        loadgen_block_size: 500
+      hosts:
+        orderer-loadgen-1:
+          ansible_host: "{{ host_machine_19 }}"
+          loadgen_tx_seed: 12345
+
+    # =========================
+    # Monitoring Infra
+    # =========================
+    monitoring:
+      vars:
+        ansible_host: "{{ host_machine_20 }}"
+      children:
+        node_exporters:
+          vars:
+            node_exporter_port: 8010
+          hosts:
+            node-exporter-1:
+              ansible_host: "{{ host_machine_1 }}"
+            node-exporter-2:
+              ansible_host: "{{ host_machine_2 }}"
+            node-exporter-3:
+              ansible_host: "{{ host_machine_3 }}"
+            node-exporter-4:
+              ansible_host: "{{ host_machine_4 }}"
+            node-exporter-5:
+              ansible_host: "{{ host_machine_5 }}"
+            node-exporter-6:
+              ansible_host: "{{ host_machine_6 }}"
+            node-exporter-7:
+              ansible_host: "{{ host_machine_7 }}"
+            node-exporter-8:
+              ansible_host: "{{ host_machine_8 }}"
+            node-exporter-9:
+              ansible_host: "{{ host_machine_9 }}"
+            node-exporter-10:
+              ansible_host: "{{ host_machine_10 }}"
+            node-exporter-11:
+              ansible_host: "{{ host_machine_11 }}"
+            node-exporter-12:
+              ansible_host: "{{ host_machine_12 }}"
+            node-exporter-13:
+              ansible_host: "{{ host_machine_13 }}"
+            node-exporter-14:
+              ansible_host: "{{ host_machine_14 }}"
+            node-exporter-15:
+              ansible_host: "{{ host_machine_15 }}"
+            node-exporter-16:
+              ansible_host: "{{ host_machine_16 }}"
+            node-exporter-17:
+              ansible_host: "{{ host_machine_17 }}"
+            node-exporter-18:
+              ansible_host: "{{ host_machine_18 }}"
+            node-exporter-19:
+              ansible_host: "{{ host_machine_19 }}"
+            node-exporter-20:
+              ansible_host: "{{ host_machine_20 }}"
+      hosts:
+        prometheus:
+          prometheus_port: 8001
+        grafana:
+          grafana_username: admin
+          grafana_password: adminPWD
+          grafana_web_port: 8002
+          prometheus_host: prometheus
