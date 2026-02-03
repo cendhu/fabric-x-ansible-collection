@@ -78,7 +78,7 @@ all:
                   committer_remote_deploy_dir: "/data/committer-aws-deployment"
                   committer_remote_node_dir: "/data/committer-aws-deployment/committer-sidecar"
                   committer_remote_config_dir: "/data/committer-aws-deployment/committer-sidecar/config"
-                  ansible_host: "{{ host_machine_21 }}"
+                  ansible_host: "{{ host_machine_22 }}"
                 committer-coordinator:
                   committer_component_type: coordinator
                   ansible_host: "{{ host_machine_2 }}"
