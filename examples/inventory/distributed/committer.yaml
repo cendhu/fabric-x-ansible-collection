@@ -75,7 +75,10 @@ all:
               hosts:
                 committer-sidecar:
                   committer_component_type: sidecar
-                  ansible_host: "{{ host_machine_1 }}"
+                  committer_remote_deploy_dir: "/data/committer-aws-deployment"
+                  committer_remote_node_dir: "/data/committer-aws-deployment/committer-sidecar"
+                  committer_remote_config_dir: "/data/committer-aws-deployment/committer-sidecar/config"
+                  ansible_host: "{{ host_machine_21 }}"
                 committer-coordinator:
                   committer_component_type: coordinator
                   ansible_host: "{{ host_machine_2 }}"
@@ -173,6 +176,7 @@ all:
         loadgen_use_bin: true
         loadgen_limit_rate: 50000
         loadgen_block_size: 500
+        loadgen_workers: 30
       hosts:
         orderer-loadgen-1:
           ansible_host: "{{ host_machine_19 }}"
