@@ -78,6 +78,7 @@ all:
                   committer_remote_deploy_dir: "/data/committer-aws-deployment"
                   committer_remote_node_dir: "/data/committer-aws-deployment/committer-sidecar"
                   committer_remote_config_dir: "/data/committer-aws-deployment/committer-sidecar/config"
+                  committer_sidecar_sync_interval: 100
                   ansible_host: "{{ host_machine_21 }}"
                 committer-coordinator:
                   committer_component_type: coordinator
@@ -87,6 +88,8 @@ all:
                   vars:
                     committer_component_type: validator
                     yugabyte_cluster_ref_id: 1
+                    committer_resource_limits_max_workers_for_preparer: 5
+                    committer_resource_limits_max_workers_for_validator: 5
                   hosts:
                     committer-validator-1:
                       ansible_host: "{{ host_machine_3 }}"
