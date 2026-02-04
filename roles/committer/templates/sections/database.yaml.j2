@@ -41,6 +41,8 @@ database:
   database: {{ hostvars[yugabyte_cluster | first].yugabyte_db }}
   # Should be enabled for DB cluster
   load-balance: true
+  split-into-tablets: 120
+
 {% if hostvars[yugabyte_cluster | first].yugabyte_use_tls is defined and hostvars[yugabyte_cluster | first].yugabyte_use_tls %}
   # Define TLS certificate for a secure communication with YugabyteDB.
   tls:
