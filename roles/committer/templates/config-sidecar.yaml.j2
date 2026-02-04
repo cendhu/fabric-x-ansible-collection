@@ -94,3 +94,11 @@ ledger:
   path: {{ committer_config_dir }}/ledger
   # Sync interval
   sync-interval: {{ committer_sidecar_sync_interval | default(100) }}
+
+# ---------------------------------------------------------------------------
+# Sidecar Buffer Settings
+# ---------------------------------------------------------------------------
+# Maximum number of transactions allowed to wait in the sidecar
+waiting-txs-limit: {{ committer_sidecar_waiting_txs_limit | default(20_000_000) }}
+# Channel buffer size capacity
+channel-buffer-size: {{ committer_sidecar_channel_buffer_size | default(200) }}
