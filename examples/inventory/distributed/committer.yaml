@@ -88,8 +88,9 @@ all:
                   vars:
                     committer_component_type: validator
                     yugabyte_cluster_ref_id: 1
-                    committer_resource_limits_max_workers_for_preparer: 5
-                    committer_resource_limits_max_workers_for_validator: 5
+                    committer_resource_limits_max_workers_for_preparer: 20
+                    committer_resource_limits_max_workers_for_validator: 20
+                    committer_resource_limits_max_workers_for_committer: 20
                   hosts:
                     committer-validator-1:
                       ansible_host: "{{ host_machine_3 }}"
@@ -97,6 +98,12 @@ all:
                       ansible_host: "{{ host_machine_4 }}"
                     committer-validator-3:
                       ansible_host: "{{ host_machine_5 }}"
+                    committer-validator-4:
+                      ansible_host: "{{ host_machine_8 }}"
+                    committer-validator-5:
+                      ansible_host: "{{ host_machine_9 }}"
+                    committer-validator-6:
+                      ansible_host: "{{ host_machine_10 }}"
                 committer_verifiers:
                   vars:
                     committer_component_type: verifier
@@ -105,6 +112,8 @@ all:
                       ansible_host: "{{ host_machine_6 }}"
                     committer-verifier-2:
                       ansible_host: "{{ host_machine_7 }}"
+                    committer-verifier-3:
+                      ansible_host: "{{ host_machine_18 }}"
                 committer_dbs:
                   vars:
                     yugabyte_user: yugabyte
