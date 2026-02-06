@@ -76,9 +76,9 @@ all:
               hosts:
                 committer-sidecar:
                   committer_component_type: sidecar
-                  # committer_remote_deploy_dir: "/data/committer-aws-deployment"
-                  # committer_remote_node_dir: "/data/committer-aws-deployment/committer-sidecar"
-                  # committer_remote_config_dir: "/data/committer-aws-deployment/committer-sidecar/config"
+                  committer_remote_deploy_dir: "/data/committer-aws-deployment"
+                  committer_remote_node_dir: "/data/committer-aws-deployment/committer-sidecar"
+                  committer_remote_config_dir: "/data/committer-aws-deployment/committer-sidecar/config"
                   committer_sidecar_sync_interval: 100
                   ansible_host: "{{ host_machine_21 }}"
                 committer-coordinator:
