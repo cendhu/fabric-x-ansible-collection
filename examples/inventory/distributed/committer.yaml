@@ -121,9 +121,6 @@ all:
                       ansible_host: "{{ host_machine_7 }}"
                 committer_dbs:
                   vars:
-                    remote_deploy_dir: "/data/committer-aws-deployment"
-                    remote_node_dir: "{{ remote_deploy_dir }}/{{ inventory_hostname }}"
-                    remote_config_dir: "{{ remote_node_dir }}/config"
                     yugabyte_user: yugabyte
                     yugabyte_password: yugabyte
                     yugabyte_db: yugabyte
@@ -137,10 +134,13 @@ all:
                       hosts:
                         yugabytedb-master-1:
                           ansible_host: "{{ host_machine_9 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-master-2:
                           ansible_host: "{{ host_machine_10 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-master-3:
                           ansible_host: "{{ host_machine_11 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                     yb_tablets:
                       vars:
                         yugabyte_component_type: tablet
@@ -155,24 +155,34 @@ all:
                       hosts:
                         yugabytedb-tablet-1:
                           ansible_host: "{{ host_machine_12 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-2:
                           ansible_host: "{{ host_machine_13 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-3:
                           ansible_host: "{{ host_machine_14 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-4:
                           ansible_host: "{{ host_machine_15 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-5:
                           ansible_host: "{{ host_machine_16 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-6:
                           ansible_host: "{{ host_machine_17 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-7:
                           ansible_host: "{{ host_machine_18 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-8:
                           ansible_host: "{{ host_machine_19 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-9:
                           ansible_host: "{{ host_machine_20 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
                         yugabytedb-tablet-10:
                           ansible_host: "{{ host_machine_21 }}"
+                          remote_deploy_dir: "/data/committer-aws-deployment"
 
     # =========================
     # HLFX LoadGens
@@ -254,6 +264,8 @@ all:
               ansible_host: "{{ host_machine_20 }}"
             node-tablet-10:
               ansible_host: "{{ host_machine_21 }}"
+            node-sidecar:
+              ansible_host: "{{ host_machine_22 }}"
       hosts:
         prometheus:
           prometheus_port: 8005
