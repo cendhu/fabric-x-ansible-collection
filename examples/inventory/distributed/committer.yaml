@@ -256,9 +256,9 @@ all:
               ansible_host: "{{ host_machine_21 }}"
       hosts:
         prometheus:
-          prometheus_port: 8001
+          prometheus_port: 8005
         grafana:
           grafana_username: admin
           grafana_password: adminPWD
-          grafana_web_port: 8002
+          grafana_web_port: 8006
           prometheus_host: prometheus
