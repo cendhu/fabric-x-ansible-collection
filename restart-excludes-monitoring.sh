@@ -1,1 +1,1 @@
-make teardown && make generate-crypto build-bins && make fabric_x_committer transfer && make load_generators transfer && make fabric_x_committer start && make load_generators start
+make load_generators teardown && make fabric_x_committer teardown && make generate-crypto build-bins && make fabric_x_committer transfer && make load_generators transfer && make fabric_x_committer start && make load_generators start
