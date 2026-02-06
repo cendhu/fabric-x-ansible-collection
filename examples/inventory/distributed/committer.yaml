@@ -21,6 +21,10 @@ all:
     # Organizations
     # =========================
     container_client: docker
+    committer_git_uri: "https://github.com/cendhu/fabric-x-committer.git"
+    committer_git_commit: "bench-feb-2026"
+    loadgen_git_uri: "https://github.com/cendhu/fabric-x-committer.git"
+    loadgen_git_commit: "bench-feb-2026"
     organizations:
       orderer_org_1: &OrdererOrg1
         name: OrdererOrg1
@@ -64,8 +68,6 @@ all:
             # =========================
             fabric_x_committer:
               vars:
-                committer_git_uri: "https://github.com/cendhu/fabric-x-committer.git"
-                committer_git_commit: "bench-feb-2026"
                 committer_use_bin: true
                 committer_build_bin: true
                 committer_rpc_port: 8001
@@ -180,8 +182,6 @@ all:
           users:
             - name: orderer-loadgen
               namespace: 0
-        loadgen_git_uri: "https://github.com/cendhu/fabric-x-committer.git"
-        loadgen_git_commit: "bench-feb-2026"
         loadgen_type: sidecar-client
         loadgen_mock_orderer_ports:
           - 8001
