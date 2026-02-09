@@ -102,11 +102,7 @@ all:
                     committer-validator-3:
                       ansible_host: "{{ host_machine_11 }}"
                     committer-validator-4:
-                      ansible_host: "{{ host_machine_12 }}"
-                    committer-validator-5:
-                      ansible_host: "{{ host_machine_13 }}"
-                    committer-validator-6:
-                      ansible_host: "{{ host_machine_14 }}"
+                      ansible_host: "{{ host_machine_7 }}"
                 committer_verifiers:
                   vars:
                     committer_component_type: verifier
@@ -117,8 +113,6 @@ all:
                       ansible_host: "{{ host_machine_5 }}"
                     committer-verifier-3:
                       ansible_host: "{{ host_machine_6 }}"
-                    committer-verifier-4:
-                      ansible_host: "{{ host_machine_7 }}"
                 committer_dbs:
                   vars:
                     yugabyte_user: yugabyte
