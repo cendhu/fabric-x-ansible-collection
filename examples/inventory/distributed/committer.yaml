@@ -59,7 +59,7 @@ all:
                     orderer_group: 1
                   hosts:
                     mock-orderer-assembler-1:
-                      ansible_host: "{{ host_machine_2 }}"
+                      ansible_host: "{{ host_machine_23 }}"
                       orderer_component_type: assembler
                       orderer_rpc_port: 8001
 
@@ -204,7 +204,7 @@ all:
 
       hosts:
         orderer-loadgen-1:
-          ansible_host: "{{ host_machine_2 }}"
+          ansible_host: "{{ host_machine_23 }}"
           loadgen_tx_seed: 12345
 
     # =========================
