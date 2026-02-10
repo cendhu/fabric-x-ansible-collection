@@ -198,9 +198,9 @@ all:
         loadgen_use_bin: true
         loadgen_limit_rate: 150000
         loadgen_block_size: 500
-        loadgen_workers: 64
-        loadgen_stream_batches: 100
-        loadgen_stream_buffers_size: 50
+        loadgen_workers: 128
+        loadgen_stream_batches: 500
+        loadgen_stream_buffers_size: 100
 
       hosts:
         orderer-loadgen-1:

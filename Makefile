@@ -20,6 +20,7 @@ PLAYBOOK_PATH := $(PROJECT_DIR)/examples/playbooks
 TARGET_HOSTS ?= all
 ASSERT_METRICS ?= false
 LIMIT ?= 1000
+PROFILE_SECONDS ?= 30
 
 # Vars to log into CR using env vars
 CONTAINER_REGISTRY ?=
@@ -175,6 +176,11 @@ ping:
 .PHONY: get-metrics
 get-metrics:
 	ansible-playbook "$(PLAYBOOK_PATH)/93-get-metrics.yaml" --extra-vars '{"target_hosts": "$(TARGET_HOSTS)", "assert_metrics": "$(ASSERT_METRICS)"}'
+
+# Collect CPU and memory pprof profiles from committer components (e.g. make fabric_x_committer collect-profile).
+.PHONY: collect-profile
+collect-profile:
+	ansible-playbook "$(PLAYBOOK_PATH)/95-collect-profile.yaml" --extra-vars '{"target_hosts": "$(TARGET_HOSTS)", "committer_profile_cpu_seconds": "$(PROFILE_SECONDS)"}'
 
 # Fetch the logs from the targeted hosts (e.g. make fabric_x fetch-logs).
 .PHONY: fetch-logs
