@@ -204,7 +204,7 @@ all:
         loadgen_workers: 128
         loadgen_stream_batches: 500
         loadgen_stream_buffers_size: 100
-        loadgen_read_write_tx_keys: 3
+        loadgen_read_write_tx_keys: 4
 
       hosts:
         orderer-loadgen-1:
