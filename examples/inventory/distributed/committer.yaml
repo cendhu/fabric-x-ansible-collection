@@ -70,7 +70,7 @@ all:
               vars:
                 committer_use_bin: true
                 committer_build_bin: true
-                committer_rpc_port: 8001
+                committer_rpc_port: 8004
                 prometheus_exporter_port: 8002
                 organization:
                   <<: *Org1
