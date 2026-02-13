@@ -85,7 +85,7 @@ all:
                   ansible_host: "{{ host_machine_22 }}"
                 committer-coordinator:
                   committer_component_type: coordinator
-                  ansible_host: "{{ host_machine_3 }}"
+                  ansible_host: "{{ host_machine_24 }}"
               children:
                 committer_validators:
                   vars:
