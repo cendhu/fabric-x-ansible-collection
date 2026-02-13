@@ -90,6 +90,7 @@ all:
                 committer_validators:
                   vars:
                     committer_component_type: validator
+                    prometheus_exporter_port: 8009
                     yugabyte_cluster_ref_id: 1
                     committer_resource_limits_max_workers_for_preparer: 20
                     committer_resource_limits_max_workers_for_validator: 20
@@ -226,7 +227,15 @@ all:
             node-loadgen:
               ansible_host: "{{ host_machine_2 }}"
             node-coordinator:
-              ansible_host: "{{ host_machine_3 }}"
+              ansible_host: "{{ host_machine_24 }}"
+            node-validator-1:
+              ansible_host: "{{ host_machine_12 }}"
+            node-validator-2:
+              ansible_host: "{{ host_machine_13 }}"
+            node-validator-3:
+              ansible_host: "{{ host_machine_14 }}"
+            node-validator-4:
+              ansible_host: "{{ host_machine_15 }}"
             node-verifier-1:
               ansible_host: "{{ host_machine_4 }}"
             node-verifier-2:
@@ -263,6 +272,8 @@ all:
               ansible_host: "{{ host_machine_21 }}"
             node-sidecar:
               ansible_host: "{{ host_machine_22 }}"
+            node-loadgen-2:
+              ansible_host: "{{ host_machine_23 }}"
       hosts:
         prometheus:
           prometheus_port: 8005
