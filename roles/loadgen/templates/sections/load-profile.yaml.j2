@@ -96,7 +96,7 @@ load-profile:
   # Note that each of the conflicts' probabilities are independent bernoulli distributions.
   conflicts:
     # Probability of invalid signatures [0,1] (default: 0).
-    invalid-signatures: {{ loadgen_conflicts_settings.invalid_signatures | default(0) }}
+    invalid-signatures: {{ loadgen_conflicts_settings.invalid_signatures | default(0.1) }}
 {% if loadgen_conflicts_settings.dependencies is defined %}
     # List of dependencies.
     dependencies:
