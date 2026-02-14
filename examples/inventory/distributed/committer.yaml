@@ -206,7 +206,9 @@ all:
         loadgen_stream_buffers_size: 100
         loadgen_read_write_tx_keys: 2
         loadgen_conflicts_settings:
-          invalid_signatures: 0.3
+          dependencies:
+            probability: 0.1
+            gap: 10
 
       hosts:
         orderer-loadgen-1:
