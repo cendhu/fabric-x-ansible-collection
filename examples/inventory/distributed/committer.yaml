@@ -207,8 +207,8 @@ all:
         loadgen_read_write_tx_keys: 2
         loadgen_conflicts_settings:
           dependencies:
-            probability: 0.1
-            gap: 10
+            probability: 0.2
+            gap: 5
 
       hosts:
         orderer-loadgen-1:
