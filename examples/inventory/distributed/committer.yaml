@@ -205,10 +205,10 @@ all:
         loadgen_stream_batches: 500
         loadgen_stream_buffers_size: 100
         loadgen_read_write_tx_keys: 2
-        loadgen_conflicts_settings:
-          dependencies:
-            - probability: 0.3
-              gap: 3
+        # loadgen_conflicts_settings:
+        #   dependencies:
+        #     - probability: 0.3
+        #       gap: 3
 
       hosts:
         orderer-loadgen-1:
